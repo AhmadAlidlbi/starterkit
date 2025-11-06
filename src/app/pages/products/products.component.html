@@ -1,0 +1,70 @@
+<mat-card class="cardWithShadow">
+  <mat-card-content class="p-24">
+    <div class="d-flex justify-content-end mb-3">
+      <button mat-raised-button color="primary" (click)="navigateToAdd()">Add Product</button>
+    </div>
+
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource" class="w-100">
+
+        <!-- ID -->
+        <ng-container matColumnDef="#">
+          <th mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+        </ng-container>
+
+        <!-- Product Name -->
+        <ng-container matColumnDef="product_name">
+          <th mat-header-cell *matHeaderCellDef>Product Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.product_name }}</td>
+        </ng-container>
+
+        <!-- Production Year -->
+        <ng-container matColumnDef="production_year">
+          <th mat-header-cell *matHeaderCellDef>Year</th>
+          <td mat-cell *matCellDef="let element">{{ element.production_year }}</td>
+        </ng-container>
+
+        <!-- Price -->
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Price</th>
+          <td mat-cell *matCellDef="let element">{{ element.price | currency }}</td>
+        </ng-container>
+
+        <!-- Availability -->
+        <ng-container matColumnDef="isavailble">
+          <th mat-header-cell *matHeaderCellDef>Available</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon color="{{ element.isavailble ? 'primary' : 'warn' }}">
+              {{ element.isavailble ? 'check_circle' : 'cancel' }}
+            </mat-icon>
+          </td>
+        </ng-container>
+
+        <!-- Expiry -->
+        <ng-container matColumnDef="expiry">
+          <th mat-header-cell *matHeaderCellDef>Expiry</th>
+          <td mat-cell *matCellDef="let element">{{ element.expiry | date:'mediumDate' }}</td>
+        </ng-container>
+
+        <!-- Action -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let element">
+            <a class="cursor-pointer m-r-10" (click)="navigateToEdit(element.id)">
+              <mat-icon>edit</mat-icon>
+            </a>
+            <a class="cursor-pointer" (click)="deleteProduct(element.id)">
+              <mat-icon>delete</mat-icon>
+            </a>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+  </mat-card-content>
+</mat-card>
